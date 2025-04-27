@@ -1,4 +1,4 @@
-# 🚀 CryptoDataAnalysis 📊
+# 🚀 Cryptocurrency Data Analysis 📊
 
 Welcome to **CryptoDataAnalysis**, a fun and insightful project that dives deep into the world of cryptocurrencies! 🪙🔍 This project uses Python and Jupyter Notebook to analyze and visualize cryptocurrency data, extracting meaningful insights from complex datasets. 📈✨
 
