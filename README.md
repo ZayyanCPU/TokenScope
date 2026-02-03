@@ -202,12 +202,6 @@ Contributions are welcome! Feel free to:
 
 ---
 
-## 📄 License
-
-This project is licensed under the terms included in the [LICENSE](LICENSE) file.
-
----
-
 <div align="center">
 
 **Built with 💻 and ☕ by a passionate data enthusiast**
