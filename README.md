@@ -86,14 +86,11 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 
 #### Historical Price Trends
 
-<div align="center">
-
-| Bitcoin (BTC) | Ethereum (ETH) | Ripple (XRP) |
-|:-------------:|:--------------:|:------------:|
-| ![BTC Price](https://via.placeholder.com/250x150/1a1a2e/f5f5f5?text=BTC+%2416K→%2428K) | ![ETH Price](https://via.placeholder.com/250x150/1a1a2e/f5f5f5?text=ETH+%241.2K→%241.9K) | ![XRP Price](https://via.placeholder.com/250x150/1a1a2e/f5f5f5?text=XRP+%240.33→%240.51) |
-| *Price rose from ~$16,000 to ~$28,000* | *Price increased from ~$1,200 to ~$1,900* | *Price grew from ~$0.33 to ~$0.51* |
-
-</div>
+| Cryptocurrency | Price Range | Trend |
+|:-------------:|:-----------:|:-----:|
+| **Bitcoin (BTC)** | $16,000 → $28,000 | 📈 +75% |
+| **Ethereum (ETH)** | $1,200 → $1,900 | 📈 +58% |
+| **Ripple (XRP)** | $0.33 → $0.51 | 📈 +55% |
 
 #### Mean Returns Comparison
 
