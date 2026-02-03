@@ -16,15 +16,11 @@
 
 </div>
 
----
-
 ## 📋 Project Overview
 
 **TokenScope** is a robust cryptocurrency data analysis platform that demonstrates end-to-end data engineering and analytics capabilities. The project showcases proficiency in API integration, data wrangling, statistical analysis, and data visualization—essential skills for Data Analyst and Data Scientist roles.
 
 This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (ETH)**, and **Ripple (XRP)** from the CoinAPI platform, performing comprehensive statistical analysis and generating actionable insights through visualizations.
-
----
 
 ## ✨ Key Features
 
@@ -36,8 +32,6 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 | **📈 Visualization Suite** | Historical price trend charts and comparative bar charts for mean returns analysis |
 | **💾 Export Capabilities** | Automated CSV export of processed data for further analysis or reporting |
 
----
-
 ## 🛠 Tech Stack
 
 ```
@@ -47,8 +41,6 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 ├── Development          → Jupyter Notebook, Python 3.8+
 └── Data Source          → CoinAPI (OHLCV Data)
 ```
-
----
 
 ## 🔄 Analysis Pipeline
 
@@ -74,8 +66,6 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 5. **Visualization** — Create time series plots and comparative bar charts
 6. **Data Export** — Save processed results to CSV format
 
----
-
 ## 📊 Results & Insights
 
 ### Statistical Analysis Results
@@ -91,8 +81,6 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 - **Bitcoin** showed the highest positive mean return, indicating overall upward momentum
 - **Ethereum** demonstrated the lowest volatility (standard deviation) among the three
 - **Ripple** experienced the highest volatility with significant price swings
-
----
 
 ### 📈 Visualizations
 
@@ -139,8 +127,6 @@ This project analyzes real-time market data for **Bitcoin (BTC)**, **Ethereum (E
 ```
 > **Note:** High correlation indicates cryptocurrencies tend to move together in the market
 
----
-
 ## 🚀 Getting Started
 
 ### Prerequisites
@@ -167,8 +153,6 @@ headers = {"X-CoinAPI-Key": "YOUR_API_KEY"}
 jupyter notebook TokenScope.ipynb
 ```
 
----
-
 ## 📁 Project Structure
 
 ```
@@ -181,8 +165,6 @@ TokenScope/
 └── Ripple.csv            # Exported XRP data (generated)
 ```
 
----
-
 ## 🎯 Skills Demonstrated
 
 - **Data Engineering**: API integration, ETL pipeline development
@@ -191,16 +173,12 @@ TokenScope/
 - **Data Visualization**: Effective communication of insights through charts
 - **Problem Solving**: Handling edge cases in financial data
 
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
 - Submit issues for bugs or feature requests
 - Fork the repository and create pull requests
 - Suggest improvements to the analysis methodology
-
----
 
 <div align="center">
 
