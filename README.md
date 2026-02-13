@@ -4,7 +4,7 @@
 
 ### Advanced Cryptocurrency Analytics Dashboard
 
-[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://tokenscope.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🚀_Live_Demo-Vercel-000000?style=for-the-badge&logo=vercel)](https://tokenscope-beta.vercel.app)
 [![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Next.js](https://img.shields.io/badge/Next.js-14-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://typescriptlang.org)
@@ -12,7 +12,7 @@
 
 *A comprehensive cryptocurrency analytics platform demonstrating data engineering, feature engineering, statistical analysis, and interactive visualization skills.*
 
-[🌐 Live Demo](https://tokenscope.vercel.app) • [Features](#-key-features) • [Tech Stack](#-tech-stack) • [Deployment](#-deployment-to-vercel) • [Getting Started](#-getting-started) • [Contact](#-contact)
+[🌐 Live Demo](https://tokenscope-beta.vercel.app) • [Features](#-key-features) • [Tech Stack](#-tech-stack) • [Deployment](#-deployment-to-vercel) • [Getting Started](#-getting-started) • [Contact](#-contact)
 
 </div>
 
