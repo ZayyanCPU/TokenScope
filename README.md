@@ -191,6 +191,21 @@ npm run dev
 # Open http://localhost:3000
 ```
 
+### Optional: Enable Free AI Chatbot (Groq)
+
+The analyst chatbot can use Groq's free-tier model for richer responses.
+
+1. Create a free key at `https://console.groq.com/keys`
+2. In `web`, create `.env.local`:
+
+```bash
+GROQ_API_KEY=your_groq_api_key
+# optional
+GROQ_MODEL=llama-3.1-8b-instant
+```
+
+If not configured, the app automatically falls back to the built-in rule-based chatbot.
+
 ### Jupyter Notebook
 ```bash
 # Install Python dependencies
