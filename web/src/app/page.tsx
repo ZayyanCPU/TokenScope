@@ -402,7 +402,7 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <div>
               <p className="text-sm font-semibold text-gray-200">Zayyan Ahmad</p>
-              <p className="text-xs text-gray-500">Data Analyst & Full-Stack Developer</p>
+              <p className="text-xs text-gray-500">Aspring ML Engineer</p>
             </div>
           </div>
 
