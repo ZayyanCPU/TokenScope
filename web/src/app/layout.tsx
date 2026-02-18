@@ -9,10 +9,10 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'TokenScope | Binance-Style Crypto Analytics',
+    default: 'TokenScope | Crypto Analytics',
     template: '%s | TokenScope',
   },
-  description: 'Binance-style cryptocurrency analytics dashboard with real-time data, technical indicators, and exportable feature engineering outputs.',
+  description: 'Cryptocurrency analytics dashboard with real-time data, technical indicators, and exportable feature engineering outputs.',
   applicationName: 'TokenScope',
   keywords: ['cryptocurrency', 'analytics', 'bitcoin', 'ethereum', 'trading', 'dashboard', 'data analytics'],
   authors: [{ name: 'TokenScope' }],
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
-    title: 'TokenScope | Binance-Style Crypto Analytics',
+    title: 'TokenScope | Crypto Analytics',
     description: 'Advanced cryptocurrency analytics with real-time data, technical indicators, and feature engineering.',
     type: 'website',
     url: '/',

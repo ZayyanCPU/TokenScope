@@ -23,6 +23,7 @@ export default function AnalystChatbot({ data, stats }: AnalystChatbotProps) {
   const [providerLabel, setProviderLabel] = useState('Groq');
   const [apiStatus, setApiStatus] = useState<'checking' | 'ready' | 'error'>('checking');
   const [apiStatusText, setApiStatusText] = useState('Checking Groq...');
+  const [autoIntroSent, setAutoIntroSent] = useState(false);
 
   const recommendation = useMemo(() => {
     return generateMarketRecommendation(stats, data, newsContext);
@@ -59,9 +60,115 @@ export default function AnalystChatbot({ data, stats }: AnalystChatbotProps) {
   useEffect(() => {
     setMessages([]);
     setQuestion('');
-    setNewsContext('');
     setProviderLabel('Groq');
+    setAutoIntroSent(false);
+    setNewsContext('');
   }, [data.symbol]);
+
+  useEffect(() => {
+    if (autoIntroSent) return;
+
+    const sendAutoIntro = async () => {
+      const questionText = 'Analyze this coin and provide the Trade Sign, Suitable status, and key metrics summary.';
+      const payload = buildChatPayload(questionText);
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (!response.ok) {
+          const errorText = data?.error || 'Groq request failed.';
+          const detailText = data?.details ? ` Details: ${data.details}` : '';
+          setProviderLabel('Groq error');
+          setMessages([{ role: 'bot', text: `${errorText}${detailText}` }]);
+          setAutoIntroSent(true);
+          return;
+        }
+
+        const botText = data?.reply;
+        if (!botText) {
+          setProviderLabel('Groq error');
+          setMessages([{ role: 'bot', text: 'Groq returned an empty response.' }]);
+          setAutoIntroSent(true);
+          return;
+        }
+
+        setProviderLabel(data?.provider || 'Groq');
+        setMessages([{ role: 'bot', text: botText }]);
+        setAutoIntroSent(true);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Unknown error contacting Groq.';
+        setProviderLabel('Groq error');
+        setMessages([{ role: 'bot', text: message }]);
+        setAutoIntroSent(true);
+      }
+    };
+
+    sendAutoIntro();
+  }, [autoIntroSent, recommendation, stats, newsContext]);
+
+  const buildChatPayload = (questionText: string) => {
+    const prices = data.prices.map((point) => point.price);
+    const lastIndex = prices.length - 1;
+    const firstIndex = Math.max(0, prices.length - 30);
+    const lastPrices = prices.slice(firstIndex);
+    const lastRsi = data.features?.rsi.slice(firstIndex) ?? [];
+    const lastVol30 = data.features?.volatility30d.slice(firstIndex) ?? [];
+    const lastVol7 = data.features?.volatility7d.slice(firstIndex) ?? [];
+    const lastMacd = data.features?.macd.slice(firstIndex) ?? [];
+    const lastSignal = data.features?.macdSignal.slice(firstIndex) ?? [];
+    const lastSma7 = data.features?.sma7.slice(firstIndex) ?? [];
+    const lastSma30 = data.features?.sma30.slice(firstIndex) ?? [];
+
+    const priceStart = prices[firstIndex] ?? stats.currentPrice;
+    const priceEnd = prices[lastIndex] ?? stats.currentPrice;
+    const priceChange = priceStart ? ((priceEnd - priceStart) / priceStart) * 100 : 0;
+    const rsiLatest = data.features?.rsi[lastIndex] ?? stats.rsi;
+    const vol30Latest = data.features?.volatility30d[lastIndex] ?? stats.volatility30d;
+    const vol7Latest = data.features?.volatility7d[lastIndex] ?? stats.volatility30d;
+
+    return {
+      question: questionText,
+      newsContext,
+      context: {
+        symbol: data.symbol,
+        signal: recommendation.signal,
+        confidence: recommendation.confidence,
+        currentPrice: stats.currentPrice,
+        rsi: stats.rsi,
+        volatility30d: stats.volatility30d,
+        sharpeRatio: stats.sharpeRatio,
+        maxDrawdown: stats.maxDrawdown,
+        priceChangePercent: stats.priceChangePercent,
+        newsSentiment: recommendation.newsSentiment,
+        drivers: recommendation.drivers,
+        risks: recommendation.risks,
+        chartSummary: {
+          priceChange30d: Number(priceChange.toFixed(2)),
+          priceStart: Number(priceStart.toFixed(2)),
+          priceEnd: Number(priceEnd.toFixed(2)),
+          rsiLatest: Number(rsiLatest.toFixed(2)),
+          volatility30dLatest: Number(vol30Latest.toFixed(4)),
+          volatility7dLatest: Number(vol7Latest.toFixed(4)),
+        },
+        chartSeries: {
+          prices: lastPrices,
+          rsi: lastRsi,
+          volatility30d: lastVol30,
+          volatility7d: lastVol7,
+          macd: lastMacd,
+          macdSignal: lastSignal,
+          sma7: lastSma7,
+          sma30: lastSma30,
+        },
+      },
+    };
+  };
 
   const handleSend = async () => {
     if (!question.trim()) return;
@@ -72,64 +179,10 @@ export default function AnalystChatbot({ data, stats }: AnalystChatbotProps) {
 
     setLoading(true);
     try {
-      const prices = data.prices.map((point) => point.price);
-      const lastIndex = prices.length - 1;
-      const firstIndex = Math.max(0, prices.length - 30);
-      const lastPrices = prices.slice(firstIndex);
-      const lastRsi = data.features?.rsi.slice(firstIndex) ?? [];
-      const lastVol30 = data.features?.volatility30d.slice(firstIndex) ?? [];
-      const lastVol7 = data.features?.volatility7d.slice(firstIndex) ?? [];
-      const lastMacd = data.features?.macd.slice(firstIndex) ?? [];
-      const lastSignal = data.features?.macdSignal.slice(firstIndex) ?? [];
-      const lastSma7 = data.features?.sma7.slice(firstIndex) ?? [];
-      const lastSma30 = data.features?.sma30.slice(firstIndex) ?? [];
-
-      const priceStart = prices[firstIndex] ?? stats.currentPrice;
-      const priceEnd = prices[lastIndex] ?? stats.currentPrice;
-      const priceChange = priceStart ? ((priceEnd - priceStart) / priceStart) * 100 : 0;
-      const rsiLatest = data.features?.rsi[lastIndex] ?? stats.rsi;
-      const vol30Latest = data.features?.volatility30d[lastIndex] ?? stats.volatility30d;
-      const vol7Latest = data.features?.volatility7d[lastIndex] ?? stats.volatility30d;
-
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          question: userQuestion,
-          newsContext,
-          context: {
-            symbol: data.symbol,
-            signal: recommendation.signal,
-            confidence: recommendation.confidence,
-            currentPrice: stats.currentPrice,
-            rsi: stats.rsi,
-            volatility30d: stats.volatility30d,
-            sharpeRatio: stats.sharpeRatio,
-            maxDrawdown: stats.maxDrawdown,
-            priceChangePercent: stats.priceChangePercent,
-            newsSentiment: recommendation.newsSentiment,
-            drivers: recommendation.drivers,
-            risks: recommendation.risks,
-            chartSummary: {
-              priceChange30d: Number(priceChange.toFixed(2)),
-              priceStart: Number(priceStart.toFixed(2)),
-              priceEnd: Number(priceEnd.toFixed(2)),
-              rsiLatest: Number(rsiLatest.toFixed(2)),
-              volatility30dLatest: Number(vol30Latest.toFixed(4)),
-              volatility7dLatest: Number(vol7Latest.toFixed(4)),
-            },
-            chartSeries: {
-              prices: lastPrices,
-              rsi: lastRsi,
-              volatility30d: lastVol30,
-              volatility7d: lastVol7,
-              macd: lastMacd,
-              macdSignal: lastSignal,
-              sma7: lastSma7,
-              sma30: lastSma30,
-            },
-          },
-        }),
+        body: JSON.stringify(buildChatPayload(userQuestion)),
       });
 
       let payload: any = null;
@@ -225,13 +278,13 @@ export default function AnalystChatbot({ data, stats }: AnalystChatbotProps) {
 
       <div className="mb-4">
         <label className="mb-2 block text-xs uppercase tracking-wider text-gray-400">
-          Optional News Context (paste headlines)
+          News Headlines (optional)
         </label>
         <textarea
           value={newsContext}
           onChange={(event) => setNewsContext(event.target.value)}
           rows={3}
-          placeholder="Example: ETF approval rumors, exchange outage, partnership announcement..."
+          placeholder="Paste latest headlines for Groq to summarize..."
           className="w-full rounded-xl border border-dark-100 bg-dark-500 px-3 py-2 text-sm text-gray-200 placeholder:text-gray-500 focus:border-primary-500 focus:outline-none"
         />
       </div>

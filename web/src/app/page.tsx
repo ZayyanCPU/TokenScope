@@ -402,14 +402,10 @@ export default function Home() {
           <div className="flex items-center gap-3">
             <div>
               <p className="text-sm font-semibold text-gray-200">Zayyan Ahmad</p>
-              <p className="text-xs text-gray-500">Aspring ML Engineer</p>
+              <p className="text-xs text-gray-500">Aspring ML Engineeri</p>
             </div>
           </div>
-
-          <div className="text-center text-xs text-gray-500">
-            TokenScope • Structured bento analytics workspace
-          </div>
-
+            
           <div className="flex flex-wrap items-center gap-3 text-xs">
             <a
               href="mailto:zayyanahmad765@gmail.com"
